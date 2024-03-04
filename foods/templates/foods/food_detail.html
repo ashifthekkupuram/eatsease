@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'foods/food_detail.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+</head>
+<div class="detail">
+    <div class="navbar">
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div></div>
+            <!-- <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div> -->
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="{% url 'cart' %}"><ion-icon name="cart-outline"></ion-icon></a>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <div class="main-detail">
+        <div class="detail-left">
+            <img class="detail-img" src="{{item.item_img.url}}" alt="">
+            <form class="add-to-cart" method="POST">
+                {% csrf_token %}
+                <input class="btn-quantity" name="quantity" type="number" value="1" min="1">
+                <button class="cart-btn">Add To Cart <ion-icon class="btn-icon" name="cart-outline"></ion-icon></button>
+            </form>
+        </div>
+        <div class="detail-right">
+            <h2>{{item.item_name}}</h2>
+            <p>{{item.item_disc}}</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

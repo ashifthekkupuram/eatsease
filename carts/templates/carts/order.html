@@ -1,0 +1,117 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'carts/cart.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .confirmation-message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .order-summary {
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+        }
+
+        .order-summary h3 {
+            color: #333;
+        }
+
+        .order-summary ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order-summary li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<div class="detail">
+    <div class="navbar">
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div></div>
+            <!-- <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div> -->
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="#"><ion-icon name="cart-outline"></ion-icon></a>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <div class="main-detail">
+        <header>
+            <h1>Delivery App</h1>
+        </header>
+    
+        <div class="container">
+            <div class="confirmation-message">
+                <h2>Order Successful!</h2>
+                <p>Your order has been confirmed. Thank you for choosing our delivery service.</p>
+            </div>
+    
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <ul>
+                    <li>
+                        <span>Order ID:</span>
+                        <span>{{ order.invoice }}</span>
+                    </li>
+                    <li>
+                        <span>Order Status:</span>
+                        <span>{{ order.status }}</span>
+                    </li>
+                    <li>
+                        <span>Total Amount:</span>
+                        <span>${{ order.price }}</span>
+                    </li>
+                    <!-- Add more order details as needed -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

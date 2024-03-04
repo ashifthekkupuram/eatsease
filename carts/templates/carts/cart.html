@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'carts/cart.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+</head>
+<div class="detail">
+    <div class="navbar">
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div></div>
+            <!-- <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div> -->
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="#"><ion-icon name="cart-outline"></ion-icon></a>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <div class="main-detail">
+        <h2>Your Shopping Cart</h2>
+        {% if cart %}
+        <ul class="cart-items">
+            {% for i in cart_items %}
+            <li class="cart-item">
+                
+                <div class="item-details">
+                <img src="{{ i.item.item_img.url }}" alt="Product Image">
+                    <h3>{{ i.item.item_name }}</h3>
+                    <p>Price: ₹{{i.item_total_price}}</p>
+                    <p>Quantity: {{ i.quantity }}</p>
+                    <a href="{% url 'remove_item' i.pk %}" class="remove-button">Remove</a>
+                </div>
+                
+            </li>
+            {% endfor %}
+            <div class="total">
+                <h4>Total Price : ₹{{ cart.cart_price }}</h4>
+                {% if request.user.check_address == None %}
+                <a href="{% url 'address' %}">Create an address to order</a>
+                {% else %}
+                <a href="{% url 'order' cart.id %}">Order</a>
+                {% endif %}
+            </div>
+            
+            <!-- Additional items can be added similarly -->
+        </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

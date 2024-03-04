@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'foods/order_detail.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+</head>
+<div class="order_detail">
+    <div class="navbar">
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div>
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="{% url 'cart' %}"><ion-icon name="cart-outline"></ion-icon></a>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <!-- Main Highlights -->
+    <!-- <div class="main-highlight">
+      
+        <div class="main-header">
+            <h2 class="main-title">Recommendations</h2>
+            <div class="main-arrow">
+                <ion-icon class="back" name="chevron-back-circle-outline"></ion-icon>
+                <ion-icon class="next" name="chevron-forward-circle-outline"></ion-icon>
+            </div>
+        </div>
+       
+        <div class="highlight-wrapper">
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://cdn.jwplayer.com/v2/media/wGEqBtuf/thumbnails/qSXwlEH3.jpg">
+                <div class="highlight-desc">
+                    <h4>Fresh Salad</h4>
+                    <p>$23.89</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://coffeebros.com/cdn/shop/articles/latte-vs-flat-white-all-differences-explained.jpg?v=1676581028">
+                <div class="highlight-desc">
+                    <h4>Latte Coffee</h4>
+                    <p>$12.46</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://www.shutterstock.com/image-photo/steak-on-cutting-board-herbs-600nw-2276818735.jpg">
+                <div class="highlight-desc">
+                    <h4>Premium Steak</h4>
+                    <p>$99.89</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://staticcookist.akamaized.net/wp-content/uploads/sites/22/2021/09/beef-burger.jpg">
+                <div class="highlight-desc">
+                    <h4>Big Burger</h4>
+                    <p>$31.23</p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Main Menu Order -->
+    <div class="main">
+        <div class="bill-container">
+            <h2>Bill Details</h2>
+            <table class="item-list">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Quantity</th>
+                        <th>Item Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Sample item row, you can add more rows as needed -->
+                    {% for i in order.cart.cart_items.all %}
+                    <tr>
+                        <td>{{ i.item.item_name }}</td>
+                        <td>{{ i.quantity }}</td>
+                        <td>₹{{ i.item_total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                    <!-- Add more rows here for additional items -->
+                </tbody>
+            </table>
+    
+            <div class="total-section">
+                <p><strong>Bill Invoice:</strong> #{{order.invoice}}</p>
+                <p><strong>Date:</strong> {{order.created | date:'F j, Y'}}</p>
+                <p><strong>Time:</strong> {{order.created | date:'g:iA'}}</p>
+                <p><strong>Total Price:</strong> ₹{{order.price}}</p>
+                <br>
+                <br>
+                <p><strong>Delivery Address :</strong></p>
+                {% if order.shipping_address.house_number is not None %}
+                <p><strong>House Number :</strong> {{order.shipping_address.house_number}}</p>
+                {% endif %}
+                <p><strong>Street :</strong> {{order.shipping_address.street}}</p>
+                <p><strong>City:</strong> {{order.shipping_address.city}}</p>
+                <p><strong>District:</strong> {{order.shipping_address.district}}</p>
+                <p><strong>State:</strong> {{order.shipping_address.state}}</p>
+                <p><strong>Pin:</strong> {{order.shipping_address.pin}}</p>
+                <p><strong>Phone:</strong> {{order.shipping_address.phone}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

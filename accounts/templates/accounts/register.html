@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+    <title>Register</title>
+</head>
+<body>
+      <div class="container">
+        <div class="box form-box">
+            <header>Sign Up</header>
+            <form action="" method="post">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{ error|escape }}
+                            <br>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        {{ error|escape }}
+                        <br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="field input">
+                    <label for="email">Email</label>
+                    <!-- <input type="text" name="email" id="email" autocomplete="off" required> -->
+                    {{ form.email }}
+                </div>
+
+                <div class="field input">
+                    <label for="username">Username</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.username }}
+                </div>
+
+                <div class="field input">
+                    <label for="password1">Password</label>
+                    <!-- <input type="password" name="password1" id="password1" autocomplete="off" required> -->
+                    {{ form.password1 }}
+                </div>
+                <div class="field input">
+                    <label for="password2">Confirm Password</label>
+                    <!-- <input type="password" name="password2" id="password2" autocomplete="off" required> -->
+                    {{ form.password2 }}
+                </div>
+
+                <div class="field">
+                    
+                    <input type="submit" class="btn" name="submit" value="Register" required>
+                </div>
+                <div class="links">
+                    Already a member? <a href="{% url 'login' %}">Sign In</a>
+                </div>
+            </form>
+        </div>
+      </div>
+</body>
+</html>

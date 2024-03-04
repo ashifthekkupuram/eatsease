@@ -1,0 +1,100 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'foods/food_detail.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+    <style>
+        header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1em;
+}
+
+.order-list {
+    margin: 20px;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.order-info {
+    flex: 2;
+}
+
+.order-status {
+    flex: 1;
+    text-align: right;
+}
+
+.order-status a {
+    background-color: #ff6666;
+        color:white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 4px;
+        text-decoration: none;
+        
+}
+
+.order-status p {
+    margin-bottom: 15px;
+}
+
+.order {
+    display: flex;
+    flex-direction: column;
+}
+    </style>
+</head>
+<div class="detail">
+    <div class="navbar">
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div></div>
+            <!-- <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div> -->
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="{% url 'cart' %}"><ion-icon name="cart-outline"></ion-icon></a>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <div class="main-detail order">
+        <header>
+            <h1>Order History</h1>
+        </header>
+    
+        <section class="order-list">
+            {% if orders %}
+            {% for order in orders %}
+            <div class="order-item">
+                <div class="order-info">
+                    <h2>Order #{{order.invoice}}</h2>
+                    <p>Date: {{order.created | date:'Y-m-d H:i'}}</p>
+                    <p>Total: ₹{{order.price}}</p>
+                </div>
+                <div class="order-status">
+                    <p>Status: {{order.status}}</p>
+                    <a href="{% url 'order_detail' order.invoice %}">View Detail</a>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <!-- Add more order items as needed -->
+        </section>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="{% static 'foods/home.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'style/nav.css' %}" type="text/css">
+</head>
+<div class="home">
+    <div class="navbar"> 
+        <!-- Menu When Appear On Mobile Version -->
+        <ion-icon class="menu-toggle" name="menu-outline"></ion-icon>
+        <!-- Search Bar -->
+        <!-- <form action="" method="post"> -->
+            <div class="search">
+                <input type="text" placeholder="what you want to eat?" id="">
+                <button class="search-btn">Search</button>
+            </div>
+        <!-- </form> -->
+        <!-- Profile Icon On Left Side Of Navbar -->
+        <div class="profile">
+            <a class="cart" href="{% url 'cart' %}"><ion-icon name="cart-outline"></ion-icon></a>
+            <p>{{ request.user.cart_items_count }}</p>
+            <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
+        </div>
+    </div>
+    <!-- Main Highlights -->
+    <!-- <div class="main-highlight">
+      
+        <div class="main-header">
+            <h2 class="main-title">Recommendations</h2>
+            <div class="main-arrow">
+                <ion-icon class="back" name="chevron-back-circle-outline"></ion-icon>
+                <ion-icon class="next" name="chevron-forward-circle-outline"></ion-icon>
+            </div>
+        </div>
+       
+        <div class="highlight-wrapper">
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://cdn.jwplayer.com/v2/media/wGEqBtuf/thumbnails/qSXwlEH3.jpg">
+                <div class="highlight-desc">
+                    <h4>Fresh Salad</h4>
+                    <p>$23.89</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://coffeebros.com/cdn/shop/articles/latte-vs-flat-white-all-differences-explained.jpg?v=1676581028">
+                <div class="highlight-desc">
+                    <h4>Latte Coffee</h4>
+                    <p>$12.46</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://www.shutterstock.com/image-photo/steak-on-cutting-board-herbs-600nw-2276818735.jpg">
+                <div class="highlight-desc">
+                    <h4>Premium Steak</h4>
+                    <p>$99.89</p>
+                </div>
+            </div>
+            <div class="highlight-card">
+                <img class="highlight-img" src="https://staticcookist.akamaized.net/wp-content/uploads/sites/22/2021/09/beef-burger.jpg">
+                <div class="highlight-desc">
+                    <h4>Big Burger</h4>
+                    <p>$31.23</p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- Main Menu Order -->
+    <div class="main-menus">
+        {% if request.user.check_address == None %}
+            
+        <div class="alert alert-danger">
+            Please Create An Address! <strong><a href="{% url 'address' %}">Click Here</a></strong>
+        </div>
+        {% endif %}
+        
+        <!-- Filter Section -->
+        <div class="main-filter">
+            <div>
+                <h1 class="main-title">Menu <br>Category</h1>
+                <div class="main-arrow">
+                    <ion-icon class="back-menus" name="chevron-back-circle-outline"></ion-icon>
+                    <ion-icon class="next-menus" name="chevron-forward-circle-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="filter-wrapper">
+                <a class="cat-dec" href="{% url 'home' %}">
+                    <div class="filter-card">
+                        <div class="filter-icon">
+                            <ion-icon name="restaurant-outline"></ion-icon>
+                        </div>
+                        <p>All Menus</p>
+                    </div>
+                </a>
+                {% if categories %}
+                {% for category in categories %}
+                <a class="cat-dec" href="{% url 'home' %}?cat={{category.slug}}">
+                    <div class="filter-card">
+                        <div class="filter-icon">
+                            <img class="cat-img" src="{{category.icon_str.url}}">
+                        </div>
+                        <p>{{ category.category_name }}</p>
+                    </div>
+                </a>
+                {% endfor %}
+                {% endif %}
+                
+            </div>
+        </div>
+        <hr class="divider">
+        <!-- List of food menus -->
+        <div class="main-detail">
+            <h2 class="main-title">Choose Order</h2>
+            <div class="detail-wrapper">
+                {% if items %}
+                {% for item in items %}
+                <div class="detail-card">
+                    <a href="{% url 'food' item.slug %}"><img class="detail-img" src="{{ item.item_img.url }}"></a>
+                    <div class="detail-desc">
+                        <a class="food-dec" href="{% url 'food' item.slug %}">
+                            <div class="detail-name">
+                                <h4>{{ item.item_name }}</h4>
+                                <p class="detail-sub">{{item.item_disc | truncatechars:60}}</p>
+                                <p class="price">₹{{item.price}}</p>
+                            </div>
+                        </a>
+                        {% if item in request.user.favs.all %}
+                        <a href="{% url 'fav_add' item.slug %}">
+                            <ion-icon class="redc detail-favorites" name="bookmark"></ion-icon>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'fav_add' item.slug %}">
+                            <ion-icon class="detail-favorites" name="bookmark-outline"></ion-icon>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h1>There were no items</h1>
+                {% endif %}
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

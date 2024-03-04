@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+    <title>Address</title>
+</head>
+<body>
+      <div class="container">
+        <div class="box form-box">
+            <header>Address</header>
+            {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+            {% endif %}
+            <form action="" method="post", id="addressForm" data-cities-url="{% url 'load_districts' %}">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            {{ error|escape }}
+                            <br>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        {{ error|escape }}
+                        <br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="field input">
+                    <label for="house_number">House Number</label>
+                    <!-- <input type="text" name="email" id="email" autocomplete="off" required> -->
+                    {{ form.house_number }}
+                </div>
+
+                <div class="field input">
+                    <label for="street">Street</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.street }}
+                </div>
+                <div class="field input">
+                    <label for="city">City</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.city }}
+                </div>
+                <div class="field input">
+                    <label for="state">State</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.state }}
+                </div>
+                <div class="field input">
+                    <label for="district">District</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.district }}
+                </div>
+                <div class="field input">
+                    <label for="pin">Pin Code</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.pin }}
+                </div>
+                <div class="field input">
+                    <label for="phone">Phone</label>
+                    <!-- <input type="text" name="username" id="username" autocomplete="off" required> -->
+                    {{ form.phone }}
+                </div>
+
+
+                <div class="field">
+                    
+                    <input type="submit" class="btn" name="submit" value="Set Address" required>
+                </div>
+            </form>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+    $("#id_state").change(function () {
+        const url = $("#addressForm").attr("data-cities-url");  // get the url of the `load_cities` view
+        const stateId = $(this).val();  // get the selected country ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'state_id': stateId       // add the country id to the GET parameters
+            },
+            success: function (data) {
+                console.log(data)   // `data` is the return of the `load_cities` view function
+                $("#id_district").html(data);  // replace the contents of the city input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (city) {
+                    html_data += `<option value="${city.id}">${city.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_city").html(html_data);
+
+                */
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

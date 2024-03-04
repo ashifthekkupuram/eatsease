@@ -1,0 +1,34 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'style/sidebar.css' %}" type="text/css">
+<div class="sidebar">
+    <h1 class="logo">EatsEase</h1>
+    <div class="sidebar-menus">
+        {% if request.path == '/' %}
+        <a class="hov" href="{% url 'home' %}"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+        {% else %}
+        <a href="{% url 'home' %}"><ion-icon name="storefront-outline"></ion-icon>Home</a>
+        {% endif %}
+        {% if request.path == '/order_list/' %}
+        <a class="hov" href="{% url 'order_list' %}"><ion-icon name="receipt-outline"></ion-icon>Orders</a>
+        {% else %}
+        <a href="{% url 'order_list' %}"><ion-icon name="receipt-outline"></ion-icon>Orders</a>
+        {% endif %}
+        {% if request.path == '/favourites/' %}
+        <a class="hov" href="{% url 'fav' %}"><ion-icon name="bookmark-outline"></ion-icon>Favourites</a>
+        {% else %}
+        <a href="{% url 'fav' %}"><ion-icon name="bookmark-outline"></ion-icon>Favourites</a>
+        {% endif %}
+        {% if request.path == '/auth/account/' %}
+        <a class="hov" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon>Account</a>
+        {% else %}
+        <a href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon>Account</a>
+        {% endif %}
+    </div>
+    <div class="sidebar-logout">
+        <a href="{% url 'logout' %}"><ion-icon name="log-out-outline"></ion-icon>Logout</a>
+    </div>
+    <script>
+        var currentUrl = "{{ request.path }}";
+        console.log("Current URL:", currentUrl);
+    </script>
+</div>
