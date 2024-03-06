@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from phonenumber_field.modelfields import PhoneNumberField
 from .models import User
+from django.forms import ClearableFileInput
+from django.contrib import messages
 
 
 class UserRegisterForm(UserCreationForm):
@@ -69,6 +71,27 @@ class ContactForm(forms.ModelForm):
             self.fields['district'].queryset = self.instance.state.district_set.order_by('name')
 
 class ProfilePictureForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        "type":"text",
+        "name":"username",
+        "id":"username",
+        "autocomplete":"off",
+        "class": "form-control"
+    }), label="Username")
+    
     class Meta:
         model = User
-        fields = ['profile']    
+        fields = ['username','profile']
+
+        widgets = {
+            'profile': ClearableFileInput(attrs={'class': 'form-control-file'})
+        }
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        user_with_username = User.objects.filter(username=username).exclude(id=self.instance.id)
+
+        if user_with_username.exists():
+            raise forms.ValidationError("This username is already taken. Please choose a different one.", code='username_taken')
+
+        return username 

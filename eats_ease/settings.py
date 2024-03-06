@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'carts.apps.CartsConfig',
     #Installed Packages
     "phonenumber_field",
+    "crispy_forms",
+    "crispy_bootstrap5",
 
 ]
 
@@ -158,4 +160,8 @@ JAZZMIN_SETTINGS = {
     'site_header': 'EatsEase Admin Dashboard',
     "copyright": "eatseaseofficial",
 }
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 

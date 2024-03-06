@@ -20,7 +20,9 @@
         <!-- Profile Icon On Left Side Of Navbar -->
         <div class="profile">
             <a class="cart" href="{% url 'cart' %}"><ion-icon name="cart-outline"></ion-icon></a>
+            {% if not request.user.cart_items_count == 0 %}
             <p>{{ request.user.cart_items_count }}</p>
+            {% endif %}
             <a class="user" href="{% url 'account' %}"><ion-icon name="person-outline"></ion-icon></a>
         </div>
     </div>

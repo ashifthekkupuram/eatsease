@@ -5,6 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .forms import UserRegisterForm,ContactForm,ProfilePictureForm
 from .models import District,State,ContactAddress
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 class RegisterPage(View):
@@ -75,7 +77,13 @@ class ProfileView(LoginRequiredMixin, View):
         form = ProfilePictureForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Profile updated successfully.')
             return redirect('account')
+        else:
+            messages.error(request, 'Username already exist!')
+            return render(request, "accounts/profile.html", {'form': form})
+
+        
         
 class EditAddressView(LoginRequiredMixin, View):
     def get(self, request):
@@ -92,4 +100,20 @@ class EditAddressView(LoginRequiredMixin, View):
             obj.save()
             # Redirect to a success page or do something else
             return redirect('account')
+        
+class PasswordChangeView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = PasswordChangeForm(request.user)
+        return render(request, 'accounts/password_change.html', {'form': form})
+    
+    def post(self, request):
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('account')
+        else:
+            messages.error(request, 'Please correct the error below.')
+            return redirect('change_password')
 

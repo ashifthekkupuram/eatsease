@@ -164,4 +164,12 @@ body{
   .alert-danger .alert-link {
     color: #843534;
   }
+.checkpass {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkpass input {
+  margin-right: 5px;
+}
 

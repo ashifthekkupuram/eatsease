@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Category, Item
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['item_name','get_cat','price']
+    list_display = ['admin_image','item_name','get_cat','price']
     exclude = ['slug']
 
     def get_cat(self, obj):

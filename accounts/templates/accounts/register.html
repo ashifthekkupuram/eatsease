@@ -51,6 +51,9 @@
                     <!-- <input type="password" name="password2" id="password2" autocomplete="off" required> -->
                     {{ form.password2 }}
                 </div>
+                <div class="checkpass">
+                    <input type="checkbox" onclick="myFunction()">Show Password
+                </div>
 
                 <div class="field">
                     
@@ -62,5 +65,18 @@
             </form>
         </div>
       </div>
+      <script>
+        function myFunction(){
+            var pass = document.getElementById("password1")
+            var cpass = document.getElementById("password2")
+            if(pass.type === "password" && cpass.type ==="password"){
+                pass.type = "text"
+                cpass.type = "text"
+            }else{
+                pass.type = "password"
+                cpass.type = "password"
+            }
+        }
+      </script>
 </body>
 </html>

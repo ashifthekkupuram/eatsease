@@ -31,7 +31,9 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" autocomplete="off" required>
                 </div>
-
+                <div class="checkpass">
+                    <input type="checkbox" onclick="myFunction()">Show Password
+                </div>
                 <div class="field">
                     
                     <input type="submit" class="btn" name="submit" value="Login" required>
@@ -42,5 +44,15 @@
             </form>
         </div>
       </div>
+      <script>
+        function myFunction(){
+            var pass = document.getElementById("password")
+            if(pass.type === "password"){
+                pass.type = "text"
+            }else{
+                pass.type = "password"
+            }
+        }
+      </script>
 </body>
 </html>

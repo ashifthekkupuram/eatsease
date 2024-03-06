@@ -10,6 +10,7 @@ from django.contrib import admin
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['__str__', 'price', 'status', 'created', 'get_cart_items', 'get_shipping_address']
     readonly_fields = ['user', 'price', 'invoice', 'created', 'get_cart_items', 'get_shipping_address']
+    ordering = ['-status',]
     exclude = ['cart','shipping_address']
 
     def has_add_permission(self, request):
@@ -18,7 +19,7 @@ class OrderAdmin(admin.ModelAdmin):
     def get_cart_items(self, obj):
         try:
             cart_items = obj.cart.cart_items.all()
-            return ''.join([f"{item.item.item_name} - {item.quantity}\n" for item in cart_items])
+            return ''.join([f"{item.item.item_name} - {item.quantity} - ₹{item.item_total_price()}\n" for item in cart_items])
         except AttributeError:
             return "N/A"
     get_cart_items.short_description = 'Items'
