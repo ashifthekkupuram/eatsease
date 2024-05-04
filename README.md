@@ -1,0 +1,1 @@
+I created an app called Eatsease, a pure food delivery platform packed with numerous features including cart management, ordering functionality, and an admin panel for adding food items. It operates on a cash-on-delivery model, with no payment integration implemented. This project was developed for a college assignment.
